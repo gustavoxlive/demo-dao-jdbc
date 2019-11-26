@@ -9,6 +9,7 @@ public class Department implements Serializable {
 	private Integer id;
 	private String name;
 	
+	//const
 	public Department() {
 	}
 	public Department(Integer id, String name) {
@@ -17,6 +18,7 @@ public class Department implements Serializable {
 		this.name = name;
 	}
 	
+	//get set
 	public Integer getId() {
 		return id;
 	}
