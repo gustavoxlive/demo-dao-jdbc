@@ -4,6 +4,7 @@ import java.util.List;
 
 import entities.Department;
 
+//CONTRATO DO DEPARTAMENTO (DATA ACESS OBJECT)
 public interface DepartmentDao {
 	
 	void insert(Department obj);

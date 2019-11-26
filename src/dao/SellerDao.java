@@ -4,6 +4,7 @@ import java.util.List;
 
 import entities.Seller;
 
+//CONTRATO SELLER (DATA ACESS OBJECT)
 public interface SellerDao {
 
 	void insert(Seller obj);
