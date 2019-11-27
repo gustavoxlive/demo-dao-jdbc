@@ -1,0 +1,20 @@
+2 classes:
+	Department   e   Seller
+
+
+2 interfaces:
+	DepartmentDAO   e   SellerDAO
+
+	
+2 classes de acesso:
+     DepartmentDaoJDBC - SellerDaoJDBC
+
+
+1 classe responsavel pela instanciação das classes acima
+              FactoryDAO
+
+
+FactoryDAO cria um novo Seller/DepartmentDaoJDBC, que por sua vez executa o contrato das interfaces Seller/DepartmentDAO
+
+os dados obtidos pelo DataAcessObject sao atribuidos a um novo objeto criado a partir das classes Seller/Department
+

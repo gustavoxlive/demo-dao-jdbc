@@ -23,6 +23,7 @@ public class SellerDaoJDBC implements SellerDao {
 		this.conn = conn;
 	}
 	
+	//INSTANCIACAO DO SELLER E DO DEPARTMENT
 	private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
 		Seller seller = new Seller();
 		seller.setId(rs.getInt("Id"));
@@ -101,14 +102,45 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public List<Seller> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try {
+			st = conn.prepareStatement(
+					"select seller.*, department.Name as DepName "
+					+"from seller inner join department "
+					+"on seller.DepartmentId = department.Id "
+					+"order by name");
+			rs = st.executeQuery();
+			List<Seller> list = new ArrayList<>();
+			Map<Integer, Department> map = new HashMap<>();
+			
+			while(rs.next()) {
+				Department dep = map.get(rs.getInt("DepartmentId"));
+				if(dep == null) {
+					dep = instantiateDepartment(rs);
+					map.put(dep.getId(), dep);
+				}
+				Seller sel = instantiateSeller(rs, dep);
+				list.add(sel);
+			}
+			return list;
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeStatement(st);
+		}
+		
 	}
 
 
-	@Override
 	
-	//FIND BY DEPARTMENT
+	
+	//FIND BY DEPARTMENT(usando departmentId)
+	@Override
 	public List<Seller> findByDepartment(Department department) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -130,7 +162,7 @@ public class SellerDaoJDBC implements SellerDao {
 			
 			
 			while(rs.next()) {
-				Department dep = map.get(rs.getString("DepartmentId"));
+				Department dep = map.get(department.getId());
 				if(dep == null) {
 					dep = instantiateDepartment(rs);
 					map.put(dep.getId(), dep);
