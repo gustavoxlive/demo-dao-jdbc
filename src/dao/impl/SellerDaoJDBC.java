@@ -24,7 +24,7 @@ public class SellerDaoJDBC implements SellerDao {
 	public SellerDaoJDBC(Connection conn) {
 		this.conn = conn;
 	}
-	
+
 	
 	//INSTANCIACAO DO SELLER E DO DEPARTMENT
 	private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
@@ -115,7 +115,6 @@ public class SellerDaoJDBC implements SellerDao {
 		}
 	}
 	
-	
 	//DELETE BY
 	@Override
 	public void deleteById(Integer id) {
@@ -127,8 +126,9 @@ public class SellerDaoJDBC implements SellerDao {
 					+ "WHERE Id = ?");
 			st.setInt(1, id);
 			int rows = st.executeUpdate();
-			
+			st.execute("ALTER TABLE department AUTO_INCREMENT = 1");
 			if(rows == 0) {
+				System.out.println("ID DOESN'T EXISTS! PROGRAM WILL BE INTERRUPTED");
 				throw new DbException("ID does not exists!");
 			}
 		}
